@@ -1,0 +1,15 @@
+# Needed for CLIP
+
+torch==1.7.1
+Pillow==7.2.0
+torchvision==0.7.0
+ftfy==5.8
+regex==2020.11.13
+
+# Data science
+
+pandas==1.1.5
+
+# Utils
+
+tqdm==4.55.2
