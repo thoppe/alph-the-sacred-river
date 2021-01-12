@@ -35,7 +35,7 @@ def compute(f0, f1):
 
     np.save(f1, latents)
 
-
+'''
 Pipe(
     "data/source_images/",
     "data/image_latents",
@@ -43,7 +43,7 @@ Pipe(
     output_suffix=".npy",
     shuffle=True,
 )(compute, 1)
-
+'''
 
 def read(f0):
     v = np.load(f0).astype(np.float64)
@@ -55,5 +55,7 @@ keys, V = zip(*data)
 
 df = pd.DataFrame(data=keys, columns=["unsplashID"])
 df.set_index("unsplashID").to_csv(f_img_keys)
+
+V = np.array(V).astype(np.float16)
 
 np.save(f_img_latents, V)
