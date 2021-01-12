@@ -15,3 +15,7 @@ numpy==1.19.5
 # Utils
 
 tqdm==4.55.2
+
+# API
+
+fastapi==0.61.2
