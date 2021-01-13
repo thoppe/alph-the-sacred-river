@@ -3,6 +3,8 @@
 
 # Cache files
 data/streamlit_image_cache
+data/source_images/
+data/image_latents/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

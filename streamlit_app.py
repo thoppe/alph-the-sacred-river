@@ -8,7 +8,7 @@ import io
 import numpy as np
 
 st.set_page_config(
-    layout="wide", page_title=api.app_formal_name, initial_sidebar_state="collapsed"
+    layout="wide", page_title=api.app_formal_name, initial_sidebar_state="expanded"
 )
 
 clf = api.CLIP()
@@ -108,13 +108,26 @@ poem_choice = st.sidebar.selectbox(
 )
 
 lines = known_poems[poem_choice]
+
+with st.beta_expander("Customize Poem Text"):
+    text_input = st.text_area(
+        "Input poem here, one line per image set. The first line will be the title. [Control+Enter] to compute.",
+        value="\n".join([title] + lines),
+    )
+    poem_choice, lines = preprocess_text(text_input)
+
 results = clf(lines)
+
 
 st.title(poem_choice)
 
-st.markdown(
-    "Work-in-progess by [@metasemantic](https://twitter.com/metasemantic), ([source](https://github.com/thoppe/alph-the-sacred-river))"
+st.sidebar.markdown("------------------------------------------------------------")
+st.sidebar.markdown(
+    f"[{api.app_formal_name}](https://github.com/thoppe/alph-the-sacred-river) combines poems and text using [CLIP](https://openai.com/blog/clip) from OpenAI. Images are sourced from the Unsplash [landscape dataset](https://github.com/unsplash/datasets) and featured photos. Photo credits at the bottom."
 )
+
+st.sidebar.markdown("Made with 💙 by [@metasemantic](https://twitter.com/metasemantic)")
+
 
 credits = []
 for k, row in enumerate(results):
