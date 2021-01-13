@@ -35,7 +35,8 @@ def compute(f0, f1):
 
     np.save(f1, latents)
 
-'''
+
+"""
 Pipe(
     "data/source_images/",
     "data/image_latents",
@@ -43,7 +44,8 @@ Pipe(
     output_suffix=".npy",
     shuffle=True,
 )(compute, 1)
-'''
+"""
+
 
 def read(f0):
     v = np.load(f0).astype(np.float64)

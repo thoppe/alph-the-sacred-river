@@ -7,8 +7,9 @@ from pathlib import Path
 import io
 import numpy as np
 
-st.set_page_config(layout="wide",page_title=api.app_formal_name,
-                   initial_sidebar_state="collapsed")
+st.set_page_config(
+    layout="wide", page_title=api.app_formal_name, initial_sidebar_state="collapsed"
+)
 
 clf = api.CLIP()
 clf.load()
@@ -17,17 +18,18 @@ sess = requests.session()
 top_n = 4
 expected_height = 600
 
-cache_dest = Path('data/streamlit_image_cache')
+cache_dest = Path("data/streamlit_image_cache")
 cache_dest.mkdir(exist_ok=True, parents=True)
+
 
 def cache_download(image_idx):
     f_img = cache_dest / f"{image_idx}.jpg"
-        
+
     if not f_img.exists():
         print(f"Downloading {image_idx}")
 
         url = f"https://unsplash.com/photos/{image_idx}/download"
-        params = {"force":True, "h" : expected_height}
+        params = {"force": True, "h": expected_height}
 
         r = sess.get(url, params=params)
 
@@ -35,18 +37,17 @@ def cache_download(image_idx):
             print(f"Failed {image_idx}")
             return None
 
-        with open(f_img, 'wb') as FOUT:
+        with open(f_img, "wb") as FOUT:
             FOUT.write(r.content)
     else:
         pass
-        #print(f"Cached load {image_idx}")
+        # print(f"Cached load {image_idx}")
 
-    with open(f_img, 'rb') as FIN:
+    with open(f_img, "rb") as FIN:
         return FIN.read()
 
-    
 
-@st.cache(ttl=10*3600)
+@st.cache(ttl=10 * 3600)
 def get_unsplash_image(image_idx):
     return cache_download(image_idx)
 
@@ -71,7 +72,6 @@ def combine_images(imageIDs):
         img = np.array(img)
         block.append(img)
 
-        
     mh = sum([x.shape[0] for x in block])
     mw = sum([x.shape[1] for x in block])
 
@@ -84,47 +84,54 @@ def combine_images(imageIDs):
         running_w += w
     return grid
 
+
 def preprocess_text(textlines):
-    lines = textlines.strip().split('\n')
-    lines = [' '.join(line.strip().split()) for line in lines if line.strip()]
+    lines = textlines.strip().split("\n")
+    lines = [" ".join(line.strip().split()) for line in lines if line.strip()]
     title, lines = lines[0], lines[1:]
     return title, lines
 
 
 # Load presaved poems
-known_poems_dest = Path('docs') / 'collected_poems'
+known_poems_dest = Path("docs") / "collected_poems"
 known_poems = {}
-for f_poem in known_poems_dest.glob('*.txt'):
+for f_poem in known_poems_dest.glob("*.txt"):
     with open(f_poem) as FIN:
         title, lines = preprocess_text(FIN.read())
 
     known_poems[title] = lines
 
-default_poem = 'Ozymandias'
+default_poem = "Ozymandias"
 poem_list = list(known_poems.keys())
-poem_choice = st.sidebar.selectbox("Select a starting poem", poem_list, index=poem_list.index(default_poem))
+poem_choice = st.sidebar.selectbox(
+    "Select a starting poem", poem_list, index=poem_list.index(default_poem)
+)
 
 lines = known_poems[poem_choice]
 results = clf(lines)
 
 st.title(poem_choice)
 
+st.markdown(
+    "Work-in-progess by [@metasemantic](https://twitter.com/metasemantic), ([source](https://github.com/thoppe/alph-the-sacred-river))"
+)
+
 credits = []
 for k, row in enumerate(results):
-    line = row['text']
+    line = row["text"]
     st.markdown(f"## *{line}*")
-    grid = combine_images(row['unsplashIDs'])
+    grid = combine_images(row["unsplashIDs"])
 
-    credits.append(f'*{line}*')
-    
-    for image_idx in row['unsplashIDs']:
-        source_url = f'https://unsplash.com/photos/{image_idx}'
-        credit = f'[{image_idx}]({source_url})'
+    credits.append(f"*{line}*")
+
+    for image_idx in row["unsplashIDs"]:
+        source_url = f"https://unsplash.com/photos/{image_idx}"
+        credit = f"[{image_idx}]({source_url})"
         credits.append(credit)
-    credits.append('\n')
+    credits.append("\n")
 
-    #caption = ', '.join([f"{x:0.0f}" for x in row['scores']])
+    # caption = ', '.join([f"{x:0.0f}" for x in row['scores']])
     st.image(grid, use_column_width=True)
 
 with st.beta_expander("Image Credits"):
-    st.markdown('\n'.join(credits))
+    st.markdown("\n".join(credits))

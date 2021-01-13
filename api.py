@@ -61,8 +61,11 @@ class CLIP:
             dx = dx[:top_k]
 
             data.append(
-                {"text": sent,
-                 "unsplashIDs":dx.index.values.tolist(), "scores": dx.values.tolist()}
+                {
+                    "text": sent,
+                    "unsplashIDs": dx.index.values.tolist(),
+                    "scores": dx.values.tolist(),
+                }
             )
 
         return data
@@ -78,6 +81,7 @@ def load_sample_data():
 
 app = FastAPI()
 
+
 class TextListInput(BaseModel):
     lines: List[str]
 
@@ -88,6 +92,7 @@ def root():
         "app_name": app_name,
         "version": __version__,
     }
+
 
 @app.get("/infer")
 def infer_multi(q: TextListInput):
