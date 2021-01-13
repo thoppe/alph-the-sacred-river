@@ -105,10 +105,22 @@ results = clf(lines)
 
 st.title(title)
 
+credits = []
 for k, row in enumerate(results):
-    st.markdown(f"## *{row['text']}*")
+    line = row['text']
+    st.markdown(f"## *{line}*")
     grid = combine_images(row['unsplashIDs'])
-    
 
-    caption = ', '.join([f"{x:0.0f}" for x in row['scores']])
-    st.image(grid, caption, use_column_width=True)
+    credits.append(f'*{line}*')
+    
+    for image_idx in row['unsplashIDs']:
+        source_url = f'https://unsplash.com/photos/{image_idx}'
+        credit = f'[{image_idx}]({source_url})'
+        credits.append(credit)
+    credits.append('\n')
+
+    #caption = ', '.join([f"{x:0.0f}" for x in row['scores']])
+    st.image(grid, use_column_width=True)
+
+with st.beta_expander("Image Credits"):
+    st.markdown('\n'.join(credits))
