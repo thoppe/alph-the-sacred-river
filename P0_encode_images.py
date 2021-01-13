@@ -36,15 +36,15 @@ def compute(f0, f1):
     np.save(f1, latents)
 
 
-"""
+
 Pipe(
     "data/source_images/",
-    "data/image_latents",
+    "data/image_latents_TMP",
     input_suffix=".jpg",
     output_suffix=".npy",
     shuffle=True,
 )(compute, 1)
-"""
+exit()
 
 
 def read(f0):

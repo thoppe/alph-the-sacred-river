@@ -2,7 +2,7 @@
 
 torch==1.7.1
 Pillow==7.2.0
-torchvision==0.7.0
+torchvision==0.8.2
 ftfy==5.8
 regex==2020.11.13
 
