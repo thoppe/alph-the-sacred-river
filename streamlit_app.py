@@ -47,12 +47,11 @@ def cache_download(image_idx):
         return FIN.read()
 
 
-@st.cache(ttl=10 * 3600)
+#@st.cache(ttl=10 * 3600)
 def get_unsplash_image(image_idx):
     return cache_download(image_idx)
 
-
-@st.cache(ttl=3600)
+#@st.cache(ttl=3600)
 def combine_images(imageIDs):
     imgs = [get_unsplash_image(idx) for idx in imageIDs]
 
