@@ -1,6 +1,9 @@
 # Temp files
 *~
 
+# Cache files
+data/streamlit_image_cache
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
