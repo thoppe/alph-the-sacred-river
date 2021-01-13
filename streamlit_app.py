@@ -7,7 +7,8 @@ from pathlib import Path
 import io
 import numpy as np
 
-st.set_page_config(layout="wide",page_title=api.app_formal_name,)
+st.set_page_config(layout="wide",page_title=api.app_formal_name,
+                   initial_sidebar_state="collapsed")
 
 clf = api.CLIP()
 clf.load()
@@ -99,11 +100,14 @@ for f_poem in known_poems_dest.glob('*.txt'):
 
     known_poems[title] = lines
 
-title = 'Ozymandias'
-lines = known_poems[title]
+default_poem = 'Ozymandias'
+poem_list = list(known_poems.keys())
+poem_choice = st.sidebar.selectbox("Select a starting poem", poem_list, index=poem_list.index(default_poem))
+
+lines = known_poems[poem_choice]
 results = clf(lines)
 
-st.title(title)
+st.title(poem_choice)
 
 credits = []
 for k, row in enumerate(results):
