@@ -112,7 +112,7 @@ lines = known_poems[poem_choice]
 with st.beta_expander("Customize Poem Text"):
     text_input = st.text_area(
         "Input poem here, one line per image set. The first line will be the title. [Control+Enter] to compute.",
-        value="\n".join([title] + lines),
+        value="\n".join([poem_choice] + lines),
     )
     poem_choice, lines = preprocess_text(text_input)
 
