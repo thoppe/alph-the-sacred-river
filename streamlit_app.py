@@ -12,10 +12,15 @@ import start_api
 api_url = "http://127.0.0.1:8000/infer"
 app_formal_name = "Alph The Sacred River"
 
+url_arguments = st.experimental_get_query_params()
 
 st.set_page_config(
     layout="wide", page_title=app_formal_name, initial_sidebar_state="expanded"
 )
+
+st.write(url_arguments)
+
+
 
 # import api
 # clf = api.CLIP()
@@ -122,9 +127,8 @@ poem_choice = st.sidebar.selectbox(
 
 lines = known_poems[poem_choice]
 
-url_arguments = st.experimental_get_query_params()
-if "text" in url_arguments:
-    poem_choice, lines = preprocess_text(url_arguments["text"][0])
+#if "text" in url_arguments:
+#    poem_choice, lines = preprocess_text(url_arguments["text"][0])
 
 with st.beta_expander("Customize Poem Text"):
     text_input = st.text_area(
