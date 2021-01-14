@@ -7,24 +7,20 @@ import io
 import numpy as np
 
 import start_api
+from streamlit.server.server import Server
 
 # Typically we run this on the same machine
 api_url = "http://127.0.0.1:8000/infer"
 app_formal_name = "Alph The Sacred River"
 
+# Need to run twice, because reasons? ST give us some state control!
+st.experimental_get_query_params()
 url_arguments = st.experimental_get_query_params()
 
 st.set_page_config(
     layout="wide", page_title=app_formal_name, initial_sidebar_state="expanded"
 )
-
 st.write(url_arguments)
-
-
-
-# import api
-# clf = api.CLIP()
-# clf.load()
 
 sess = requests.session()
 top_n = 4
