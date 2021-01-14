@@ -1,5 +1,4 @@
 import streamlit as st
-import api
 import requests
 from PIL import Image
 from pathlib import Path
@@ -7,12 +6,18 @@ from pathlib import Path
 import io
 import numpy as np
 
+# Typically we run this on the same machine
+api_url = "http://127.0.0.1:8000/infer"
+app_formal_name = "Alph The Sacred River"
+
+
 st.set_page_config(
-    layout="wide", page_title=api.app_formal_name, initial_sidebar_state="expanded"
+    layout="wide", page_title=app_formal_name, initial_sidebar_state="expanded"
 )
 
-clf = api.CLIP()
-clf.load()
+# import api
+# clf = api.CLIP()
+# clf.load()
 
 sess = requests.session()
 top_n = 4
@@ -20,6 +25,12 @@ expected_height = 600
 
 cache_dest = Path("data/streamlit_image_cache")
 cache_dest.mkdir(exist_ok=True, parents=True)
+
+
+@st.cache(ttl=3600)
+def encoding_sentences(lines):
+    r = requests.get(api_url, json={"lines": lines})
+    return r.json()
 
 
 def cache_download(image_idx):
@@ -47,11 +58,12 @@ def cache_download(image_idx):
         return FIN.read()
 
 
-#@st.cache(ttl=10 * 3600)
+# @st.cache(ttl=10 * 3600)
 def get_unsplash_image(image_idx):
     return cache_download(image_idx)
 
-#@st.cache(ttl=3600)
+
+# @st.cache(ttl=3600)
 def combine_images(imageIDs):
     imgs = [get_unsplash_image(idx) for idx in imageIDs]
 
@@ -115,14 +127,14 @@ with st.beta_expander("Customize Poem Text"):
     )
     poem_choice, lines = preprocess_text(text_input)
 
-results = clf(lines)
 
+results = encoding_sentences(lines)
 
 st.title(poem_choice)
 
 st.sidebar.markdown("------------------------------------------------------------")
 st.sidebar.markdown(
-    f"[{api.app_formal_name}](https://github.com/thoppe/alph-the-sacred-river) combines poems and text using [CLIP](https://openai.com/blog/clip) from OpenAI. Images are sourced from the Unsplash [landscape dataset](https://github.com/unsplash/datasets) and featured photos. Photo credits at the bottom."
+    f"[{app_formal_name}](https://github.com/thoppe/alph-the-sacred-river) combines poems and text using [CLIP](https://openai.com/blog/clip) from OpenAI. Images are sourced from the Unsplash [landscape dataset](https://github.com/unsplash/datasets) and featured photos. Photo credits at the bottom."
 )
 
 st.sidebar.markdown("Made with 💙 by [@metasemantic](https://twitter.com/metasemantic)")

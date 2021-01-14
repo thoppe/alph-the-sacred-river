@@ -9,7 +9,6 @@ from typing import List
 from pydantic import BaseModel
 
 app_name = "alph-the-sacred-river"
-app_formal_name = "Alph The Sacred River"
 __version__ = "0.1.0"
 
 
@@ -67,7 +66,6 @@ class CLIP:
                     "scores": dx.values.tolist(),
                 }
             )
-
         return data
 
 
@@ -80,6 +78,9 @@ def load_sample_data():
 
 
 app = FastAPI()
+
+clf = CLIP()
+clf.load()
 
 
 class TextListInput(BaseModel):
@@ -100,9 +101,6 @@ def infer_multi(q: TextListInput):
 
 
 if __name__ == "__main__":
-
-    clf = CLIP()
-    clf.load()
 
     sents = load_sample_data()
 
