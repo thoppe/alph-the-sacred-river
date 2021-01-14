@@ -13,14 +13,9 @@ from streamlit.server.server import Server
 api_url = "http://127.0.0.1:8000/infer"
 app_formal_name = "Alph The Sacred River"
 
-# Need to run twice, because reasons? ST give us some state control!
-st.experimental_get_query_params()
-url_arguments = st.experimental_get_query_params()
-
 st.set_page_config(
     layout="wide", page_title=app_formal_name, initial_sidebar_state="expanded"
 )
-st.write(url_arguments)
 
 sess = requests.session()
 top_n = 4
@@ -123,7 +118,7 @@ poem_choice = st.sidebar.selectbox(
 
 lines = known_poems[poem_choice]
 
-#if "text" in url_arguments:
+# if "text" in url_arguments:
 #    poem_choice, lines = preprocess_text(url_arguments["text"][0])
 
 with st.beta_expander("Customize Poem Text"):
@@ -133,12 +128,10 @@ with st.beta_expander("Customize Poem Text"):
     )
     poem_choice, lines = preprocess_text(text_input)
 
-    st.write("Clicking below changes the URL, copy the link after the click!")
-    share_button = st.button("🔗 Share this poem with others")
-
-    if share_button:
-        st.experimental_set_query_params(text=text_input)
-
+    # st.write("Clicking below changes the URL, copy the link after the click!")
+    # share_button = st.button("🔗 Share this poem with others")
+    # if share_button:
+    #    st.experimental_set_query_params(text=text_input)
 
 # Handle the case where the user inputs
 # st.experimental_set_query_params(text=text_input)
