@@ -6,6 +6,8 @@ from pathlib import Path
 import io
 import numpy as np
 
+import start_api
+
 # Typically we run this on the same machine
 api_url = "http://127.0.0.1:8000/infer"
 app_formal_name = "Alph The Sacred River"
