@@ -4,6 +4,7 @@ Pillow==7.2.0
 ftfy==5.8
 regex==2020.11.13
 
+--find-links https://download.pytorch.org/whl/torch_stable.html
 torch==1.7.1+cpu
 torchvision==0.8.2+cpu
 
