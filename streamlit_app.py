@@ -122,6 +122,10 @@ poem_choice = st.sidebar.selectbox(
 
 lines = known_poems[poem_choice]
 
+url_arguments = st.experimental_get_query_params()
+if "text" in url_arguments:
+    poem_choice, lines = preprocess_text(url_arguments["text"][0])
+
 with st.beta_expander("Customize Poem Text"):
     text_input = st.text_area(
         "Input poem here, one line per image set. The first line will be the title. [Control+Enter] to compute.",
@@ -129,6 +133,15 @@ with st.beta_expander("Customize Poem Text"):
     )
     poem_choice, lines = preprocess_text(text_input)
 
+    st.write("Clicking below changes the URL, copy the link after the click!")
+    share_button = st.button("🔗 Share this poem with others")
+
+    if share_button:
+        st.experimental_set_query_params(text=text_input)
+
+
+# Handle the case where the user inputs
+# st.experimental_set_query_params(text=text_input)
 
 results = encoding_sentences(lines)
 
@@ -140,6 +153,10 @@ st.sidebar.markdown(
 )
 
 st.sidebar.markdown("Made with 💙 by [@metasemantic](https://twitter.com/metasemantic)")
+
+
+# st.sidebar.write(st.experimental_get_query_params())
+# st.experimental_set_query_params(text=text_input)
 
 
 credits = []
