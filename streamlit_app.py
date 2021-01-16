@@ -145,8 +145,7 @@ st.sidebar.markdown(
     f"[{app_formal_name}](https://github.com/thoppe/alph-the-sacred-river) combines poems and text using [CLIP](https://openai.com/blog/clip) from OpenAI. Images are sourced from the Unsplash [landscape dataset](https://github.com/unsplash/datasets) and featured photos. Photo credits at the bottom."
 )
 
-st.sidebar.markdown("Made with 💙 by [@metasemantic](https://twitter.com/metasemantic)")
-
+st.sidebar.markdown("Made with 💙 by [@metasemantic](https://twitter.com/metasemantic/status/1349446585952989186")
 
 # st.sidebar.write(st.experimental_get_query_params())
 # st.experimental_set_query_params(text=text_input)

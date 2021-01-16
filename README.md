@@ -1,6 +1,10 @@
 # Alph, The Sacred River
 _AI poetic imagery using [CLIP](https://github.com/openai/CLIP) and [Unsplash](https://unsplash.com/)_
 
+See it live!
+
+https://share.streamlit.io/thoppe/alph-the-sacred-river/main
+
 ## Preprocessing steps for new images
 
 + Download a bunch of images from Unsplash ([start here!](https://github.com/unsplash/datasets))
