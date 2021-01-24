@@ -1,5 +1,7 @@
 """
-An annonying starter file for Streamlit Sharing to get the API up and running.
+Starter file for Streamlit Sharing to get the API up and running.
+This launches each time the app is refreshed, but only restarts the API
+if it isn't detected.
 """
 
 import subprocess
