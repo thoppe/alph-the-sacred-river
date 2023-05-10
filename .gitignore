@@ -1,6 +1,9 @@
 # Temp files
 *~
 
+# Testing files
+venv
+
 # Cache files
 data/streamlit_image_cache
 data/source_images

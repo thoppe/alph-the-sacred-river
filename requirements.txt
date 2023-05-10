@@ -1,18 +1,20 @@
 # Needed for CLIP
 
-Pillow==7.2.0
-ftfy==5.8
-regex==2020.11.13
+Pillow #==9.5.0
+ftfy   #==5.8
+regex  #==2020.11.13
 
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torch==1.7.1+cpu
 torchvision==0.8.2+cpu
+protobuf==3.20
+altair==4.0.0
 
 # Data science
 
-pandas==1.1.5
-dspipe==0.2.3
-numpy==1.19.5
+pandas #==1.1.5
+dspipe #==0.2.3
+numpy  #>=1.24
 
 # Utils
 
@@ -20,8 +22,8 @@ tqdm==4.55.2
 
 # API
 
-fastapi==0.61.2
-uvicorn==0.11.8
+fastapi #==0.61.2
+uvicorn #==0.11.8
 
 # Latest version for streamlit with better resource management
 streamlit==1.4.0

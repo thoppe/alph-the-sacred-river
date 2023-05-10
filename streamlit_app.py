@@ -30,7 +30,7 @@ lines = known_poems[poem_choice]
 
 
 # If the user has a custom poem, use it here
-with st.beta_expander("Customize Poem Text"):
+with st.expander("Customize Poem Text"):
     text_input = st.text_area(
         "Input poem here, one line per image set. The first line will be the title. [Control+Enter] to compute.",
         value="\n".join([poem_choice] + lines),
@@ -71,5 +71,5 @@ for k, row in enumerate(results):
     # caption = ', '.join([f"{x:0.0f}" for x in row['scores']])
     st.image(grid, use_column_width=True)
 
-with st.beta_expander("Image Credits"):
+with st.expander("Image Credits"):
     st.markdown("\n".join(credits))
