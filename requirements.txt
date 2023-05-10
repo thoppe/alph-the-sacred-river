@@ -22,4 +22,6 @@ tqdm==4.55.2
 
 fastapi==0.61.2
 uvicorn==0.11.8
-streamlit==0.71.0
+
+# Latest version for streamlit with better resource management
+streamlit==1.4.0
